@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Couple Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: pink;
+      color: #333;
+    }
+    .quiz-container {
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 500px;
+      margin: 50px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #ff5fa2;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff2e84;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #e91e63;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>💕 Our Love Quiz 💕</h1>
+    <div id="quiz"></div>
+    <button id="submit">See Result</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "When did we first start talking?",
+        options: ["January", "March", "July"],
+        answer: "July"
+      },
+      {
+        question: "What is my favorite subject?",
+        options: ["Math", "PE", "History"],
+        answer: "Math"
+      },
+      {
+        question: "Which of these do I love the most?",
+        options: ["You", "Movies 🎬", "Ice cream 🍦"],
+        answer: "You"
+      },
+      {
+        question: "Who makes me smile the most?",
+        options: ["My best friend", "My brother", "YOU 💖"],
+        answer: "YOU 💖"
+      },
+      {
+        question: "What is my favorite color?",
+        options: ["Blue", "Pink", "Red"],
+        answer: "Blue"
+      },
+      {
+        question: "What is my dream job?",
+        options: ["Doctor", "Engineer", "Your husband"],
+        answer: "Your husband"
+      },
+      {
+        question: "What emoji do I use the most?",
+        options: [":>", "-_-", ";-;"],
+        answer: ";-;"
+      },
+      {
+        question: "What is my favorite food?",
+        options: ["Pizza", "Sushi", "You"],
+        answer: "You"
+      },
+      {
+        question: "When will we date?",
+        options: ["Now", "In 2 years", "Sooner than you think"],
+        answer: "Now"
+      }
+    ];
+
+    const quiz = document.getElementById("quiz");
+    const submitBtn = document.getElementById("submit");
+    const resultEl = document.getElementById("result");
+
+    let currentQuiz = 0;
+    let score = 0;
+    let answers = [];
+
+    function loadQuiz() {
+      const q = quizData[currentQuiz];
+      quiz.innerHTML = `
+        <h2>${q.question}</h2>
+        ${q.options.map(opt => `
+          <label>
+            <input type="radio" name="answer" value="${opt}"> ${opt}
+          </label><br>
+        `).join("")}
+      `;
+    }
+
+    loadQuiz();
+
+    submitBtn.addEventListener("click", () => {
+      const selected = document.querySelector("input[name='answer']:checked");
+      if (selected) {
+        answers.push(selected.value);
+        if (selected.value === quizData[currentQuiz].answer) {
+          score++;
+        }
+        currentQuiz++;
+        if (currentQuiz < quizData.length) {
+          loadQuiz();
+        } else {
+          quiz.innerHTML = "";
+          submitBtn.style.display = "none";
+          resultEl.innerHTML = `You got <b>${score}/${quizData.length}</b> correct! 💕<br><br>
+          You’re my favorite part of every day. No matter how busy, tired, or distracted I get, the best moment is always when I’m with you. You’re my safe place, my happiness, and my forever person. 💕`;
+        }
+      } else {
+        alert("Please select an answer!");
+      }
+    });
+  </script>
+</body>
+</html>
